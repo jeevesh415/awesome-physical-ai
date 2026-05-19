@@ -1,0 +1,33 @@
+---
+id: evaluation-methodology
+title: Evaluation Methodology
+description: Harnesses, metrics, and methodology for measuring robot policy performance, robustness, and sim-to-real validity.
+---
+
+# Evaluation Methodology
+
+Evaluation methodology is the discipline of measuring policies *correctly* — the harnesses, metrics, statistical practices, and protocols that turn a noisy stream of rollouts into a defensible claim about capability. It is distinct from benchmarks: benchmarks fix the *tasks*; methodology fixes how you *measure* over them.
+
+From an engineering and deployment standpoint, this is where most reproducibility failures and overclaimed results live. Small evaluation samples, hidden seed selection, mismatched simulator builds, and offline metrics that do not predict online behaviour all combine to produce numbers that look strong on paper and collapse on hardware. Robust methodology is what makes go/no-go decisions, regression checks, and external comparisons trustworthy.
+
+When choosing tools here, prioritise **statistical rigour** (confidence intervals, seed counts, paired comparisons), **sim-real correlation** for anything you intend to deploy, and **closed-loop evaluation** over open-loop replay whenever the task involves control. Treat the evaluation harness as production code: version it, pin it, and require that any reported metric is reproducible from a single command.
+
+:::tip Start here
+**[Statistical Reliability of RL Evaluations](https://agarwl.github.io/rliable/)** (`rliable`) is the fastest way to upgrade your evaluation hygiene — confidence intervals, performance profiles, and aggregate metrics that hold up under low seed counts.
+:::
+
+- [RoboArena](https://robo-arena.github.io/) — Decentralised real-world evaluation protocol for generalist robot policies.
+- [robomimic](https://robomimic.github.io/) — Standardised offline-RL and imitation-learning evaluation pipeline with reproducible baselines.
+- [Bench2Drive](https://github.com/Thinklab-SJTU/Bench2Drive) — Closed-loop evaluation protocol for end-to-end driving policies.
+- [Eval-vs-Train Mismatch (Kumar et al.)](https://arxiv.org/abs/2306.13085) — Methodology paper on why offline metrics mispredict deployed robot performance.
+- [SimplerEnv](https://simpler-env.github.io/) — Aligned simulator-based evaluation that correlates with real-robot performance for VLAs.
+- [Statistical Reliability of RL Evaluations](https://agarwl.github.io/rliable/) — `rliable` library and methodology for confidence intervals on RL benchmarks.
+- [EvalAI](https://eval.ai/) — Open platform for challenge hosting, leaderboard management, and standardized evaluation workflows.
+- [CodaLab Competitions](https://codalab.org/) — Reproducible benchmark and submission platform for shared evaluation protocols.
+- [CARLA ScenarioRunner](https://github.com/carla-simulator/scenario_runner) — Scenario-based closed-loop evaluation harness for safety-critical driving behaviors.
+- [nuPlan Devkit](https://github.com/motional/nuplan-devkit) — End-to-end planning evaluation stack with documented metrics and simulation loops.
+- [Waymo Open Challenges](https://waymo.com/open/challenges/) — Public challenge suite with fixed protocols for forecasting and planning evaluation.
+- [LeRobot Evaluation Scripts](https://github.com/huggingface/lerobot) — Practical evaluation tooling for imitation-learning and policy-regression checks.
+- [RoboHive](https://github.com/vikashplus/robohive) — Benchmarking suite with standardized tasks and scoring across manipulation and locomotion.
+- [Deep RL That Matters](https://arxiv.org/abs/1709.06560) — Foundational paper on statistical pitfalls and reproducibility in RL evaluation.
+- [Empirical Design in Reinforcement Learning](https://arxiv.org/abs/2102.03479) — Guidance on experimental design choices that materially affect reported results.

@@ -1,0 +1,66 @@
+name: Curation review
+description: Kick off a scheduled or ad-hoc review pass of the curated list.
+title: "Curation review — <YYYY-MM>"
+labels: ["curation", "maintenance"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to open an ad-hoc curation review pass. Scheduled monthly reviews are opened automatically by `.github/workflows/curation-review.yml` on the first of each month. Work through the checklist in [REVIEW.md](https://github.com/natnew/awesome-physical-ai/blob/main/REVIEW.md) (local copy) or the [Review process](https://natnew.github.io/awesome-physical-ai/docs/workflow-review) docs page. Submit all changes in a single PR titled **Curation review: YYYY-MM**.
+  - type: input
+    id: review-month
+    attributes:
+      label: Review month (YYYY-MM)
+      placeholder: "2026-04"
+      description: The month this review pass covers. Use the current month for ad-hoc passes.
+    validations:
+      required: true
+  - type: input
+    id: reviewer
+    attributes:
+      label: Reviewer
+      description: GitHub handle, or "open" if unassigned.
+      placeholder: "@yourhandle"
+    validations:
+      required: true
+  - type: checkboxes
+    id: categories-to-review
+    attributes:
+      label: Categories to review
+      description: Uncheck any categories being deliberately skipped this pass.
+      options:
+        - label: Simulators
+          required: false
+        - label: Datasets
+          required: false
+        - label: Benchmarks
+          required: false
+        - label: Evaluation Methodology
+          required: false
+        - label: Robotics Foundation Models
+          required: false
+        - label: World Models
+          required: false
+        - label: Manipulation
+          required: false
+        - label: Locomotion
+          required: false
+        - label: Sim-to-Real
+          required: false
+        - label: Safety & Robustness
+          required: false
+        - label: Governance & Policy
+          required: false
+        - label: Production Patterns
+          required: false
+        - label: Courses
+          required: false
+        - label: Companies
+          required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Known issues, specific categories of concern, or context for this review pass.
+    validations:
+      required: false

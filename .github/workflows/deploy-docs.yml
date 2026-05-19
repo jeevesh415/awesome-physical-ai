@@ -23,25 +23,80 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: website/package-lock.json
 
+      - name: Verify lockfile
+        working-directory: website
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "::error::website/package-lock.json is missing. Run 'npm install' locally and commit the lockfile."
+            exit 1
+          fi
+
       - name: Install dependencies
         working-directory: website
         run: npm ci
+
+      - name: Resolve deployment URL settings
+        shell: bash
+        env:
+          CUSTOM_DOMAIN: ${{ vars.DOCUSAURUS_CUSTOM_DOMAIN }}
+          EXPLICIT_SITE_URL: ${{ vars.DOCUSAURUS_SITE_URL }}
+          EXPLICIT_BASE_URL: ${{ vars.DOCUSAURUS_BASE_URL }}
+        run: |
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            echo "DOCUSAURUS_CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> "$GITHUB_ENV"
+            echo "DOCUSAURUS_SITE_URL=https://$CUSTOM_DOMAIN" >> "$GITHUB_ENV"
+            if [ -n "$EXPLICIT_BASE_URL" ]; then
+              echo "DOCUSAURUS_BASE_URL=$EXPLICIT_BASE_URL" >> "$GITHUB_ENV"
+            else
+              echo "DOCUSAURUS_BASE_URL=/" >> "$GITHUB_ENV"
+            fi
+          else
+            if [ -n "$EXPLICIT_SITE_URL" ]; then
+              echo "DOCUSAURUS_SITE_URL=$EXPLICIT_SITE_URL" >> "$GITHUB_ENV"
+            else
+              echo "DOCUSAURUS_SITE_URL=https://natnew.github.io" >> "$GITHUB_ENV"
+            fi
+
+            if [ -n "$EXPLICIT_BASE_URL" ]; then
+              echo "DOCUSAURUS_BASE_URL=$EXPLICIT_BASE_URL" >> "$GITHUB_ENV"
+            else
+              echo "DOCUSAURUS_BASE_URL=/awesome-physical-ai/" >> "$GITHUB_ENV"
+            fi
+          fi
+
+      - name: Add CNAME for custom domain
+        if: ${{ vars.DOCUSAURUS_CUSTOM_DOMAIN != '' }}
+        working-directory: website/static
+        shell: bash
+        env:
+          CUSTOM_DOMAIN: ${{ vars.DOCUSAURUS_CUSTOM_DOMAIN }}
+        run: |
+          # Strip any whitespace/newlines and validate it looks like a hostname
+          domain="$(printf '%s' "$CUSTOM_DOMAIN" | tr -d '[:space:]')"
+          if [[ ! "$domain" =~ ^[A-Za-z0-9.-]+$ ]]; then
+            echo "ERROR: DOCUSAURUS_CUSTOM_DOMAIN contains unexpected characters" >&2
+            exit 1
+          fi
+          printf '%s\n' "$domain" > CNAME
 
       - name: Build site
         working-directory: website
         run: npm run build
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: website/build
 
@@ -54,4 +109,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

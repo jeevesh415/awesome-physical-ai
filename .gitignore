@@ -215,3 +215,22 @@ website/.docusaurus/
 website/build/
 website/.cache-loader/
 
+
+# Project constitution (local only)
+specs/
+
+# Local review process doc (not for publishing)
+REVIEW.md
+
+# Local announcement drafts (not for publishing)
+ANNOUNCEMENTS.md
+
+
+# Private working documents (local only)
+_private/
+
+# assets
+assets/*
+!assets/github/
+!assets/readme/
+!assets/we-love-contributors.png

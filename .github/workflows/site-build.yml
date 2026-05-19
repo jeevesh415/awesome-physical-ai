@@ -1,0 +1,51 @@
+name: site-build
+
+on:
+  pull_request:
+    paths:
+      - website/**
+      - .github/workflows/site-build.yml
+  push:
+    branches:
+      - main
+    paths:
+      - website/**
+      - .github/workflows/site-build.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Docusaurus site
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Verify lockfile
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "::error::website/package-lock.json is missing. Run 'npm install' locally and commit the lockfile."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build

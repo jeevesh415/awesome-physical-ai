@@ -1,0 +1,33 @@
+---
+id: benchmarks
+title: Benchmarks
+description: Task suites and standardised evaluations for manipulation, locomotion, and embodied reasoning — LIBERO, RLBench, MetaWorld, CALVIN, HumanoidBench, FurnitureBench, ARNOLD, Colosseum, OpenEQA.
+---
+
+# Benchmarks
+
+Benchmarks are the fixed task suites — manipulation skills, long-horizon assemblies, language-conditioned rollouts, embodied QA — used to compare policies under controlled conditions. They define the scenes, success criteria, and evaluation protocol so that two methods can be claimed to be measured against the same yardstick.
+
+From an engineering standpoint, benchmarks are how the field communicates progress, but they are also where most overclaimed results originate. A benchmark's distribution, evaluation cap, and randomisation seeds determine whether reported numbers translate to deployed reliability. Treat benchmark wins as evidence of a *floor* of capability under that distribution — not a ceiling, and not a guarantee of generalisation outside it.
+
+When choosing a benchmark, match the **task family** (manipulation, locomotion, embodied reasoning) and **horizon** (single skill vs. long-horizon) to the capability you actually need to demonstrate. Prefer benchmarks with explicit **generalisation axes** (object, scene, language perturbations) over fixed-scene suites, and pair simulated benchmarks with at least one real-world evaluation before drawing conclusions.
+
+:::tip Start here
+**[LIBERO](https://libero-project.github.io/)** is a strong default for manipulation: 130 tasks across procedural variations, well-supported tooling, and broad adoption across recent VLA papers.
+:::
+
+- [LIBERO](https://libero-project.github.io/) — Lifelong robot learning benchmark with 130 diverse manipulation tasks.
+- [RLBench](https://sites.google.com/view/rlbench) — Vision-guided manipulation benchmark covering 100+ tasks in CoppeliaSim.
+- [MetaWorld](https://meta-world.github.io/) — Meta-RL benchmark with 50 manipulation tasks for multi-task and transfer studies.
+- [CALVIN](https://github.com/mees/calvin) — Benchmark for long-horizon, language-conditioned manipulation.
+- [HumanoidBench](https://humanoid-bench.github.io/) — Simulated humanoid benchmark for whole-body control across locomotion and manipulation.
+- [FurnitureBench](https://clvrai.github.io/furniture-bench/) — Real-world long-horizon furniture assembly benchmark.
+- [ARNOLD](https://arnold-benchmark.github.io/) — Language-grounded continuous-task benchmark in physically realistic scenes.
+- [Colosseum](https://robot-colosseum.github.io/) — Generalisation benchmark perturbing 14 axes of variation for manipulation.
+- [OpenEQA](https://open-eqa.github.io/) — Embodied question-answering benchmark over scanned real environments.
+- [CARLA Leaderboard](https://leaderboard.carla.org/) — Standardized autonomous-driving benchmark emphasizing closed-loop safety and robustness.
+- [MineDojo](https://minedojo.org/) — Open-ended embodied-agent benchmark for long-horizon decision making in complex 3D worlds.
+- [ALFRED](https://askforalfred.com/) — Vision-language benchmark for household instruction following and embodied task completion.
+- [TEACh](https://teach.cs.washington.edu/) — Interactive benchmark for embodied dialog and task execution in household environments.
+- [RoboTHOR](https://ai2thor.allenai.org/robothor/) — Navigation benchmark focused on sim-to-real transfer and unseen-scene generalization.
+- [ManiSkill Benchmark](https://github.com/haosulab/ManiSkill) — Manipulation benchmark suite with scalable GPU simulation and reproducible baselines.

@@ -1,0 +1,44 @@
+---
+id: locomotion
+title: Locomotion
+description: Legged, bipedal, and humanoid locomotion — controllers, learning approaches, and reference platforms.
+---
+
+# Locomotion
+
+Locomotion covers the controllers, learning pipelines, and reference platforms behind legged, bipedal, and humanoid movement. It spans model-based whole-body control, RL-trained neural controllers, perceptive locomotion over rough terrain, and the GPU-parallel training stacks that make modern sim-to-real locomotion practical.
+
+From an engineering standpoint, locomotion is the category where sim-to-real *works* — modern RL policies for quadrupeds and humanoids transfer reliably when training is done with massive parallelism and well-tuned domain randomisation. The interesting risks have moved up the stack: robustness to terrain and disturbances, perceptive integration with cameras and depth, and the safety envelope around fast, dynamic motion near humans.
+
+When choosing between approaches, weigh **platform** (quadruped vs. biped vs. humanoid), **simulator and trainer** (Isaac Lab + RSL-RL is the current default), and **perceptive vs. blind** locomotion based on the terrain you actually need. Reference platforms and open codebases matter disproportionately here: most production locomotion stacks are forks of a small number of well-maintained repositories.
+
+:::tip Start here
+**[Learning to Walk in Minutes (ETH/RSL)](https://leggedrobotics.github.io/legged_gym/)** is the canonical entry point: GPU-parallel RL with a working sim-to-real pipeline for quadrupeds. It pairs naturally with [RSL-RL](https://github.com/leggedrobotics/rsl_rl) (the PPO trainer) and [legged_gym](https://github.com/leggedrobotics/legged_gym) (the environments), both listed below.
+:::
+
+- [Learning to Walk in Minutes (ETH/RSL)](https://leggedrobotics.github.io/legged_gym/) — Massively-parallel RL pipeline that trains quadruped locomotion policies from scratch in simulation.
+- [RMA — Rapid Motor Adaptation](https://ashish-kmr.github.io/rma-legged-robots/) — Online adaptation method for robust real-world quadruped locomotion.
+- [ANYmal Parkour (RSL)](https://www.anybotics.com/robotics/anymal/) — Perceptive locomotion enabling agile traversal of complex terrain.
+- [Cassie Bipedal Locomotion](https://arxiv.org/abs/2105.08328) — Sim-to-real RL controllers for blind bipedal locomotion on Cassie.
+- [HumanPlus](https://humanoid-ai.github.io/) — Humanoid shadowing of human motion for whole-body control via teleoperation and RL.
+- [OmniH2O](https://omni.human2humanoid.com/) — Universal whole-body teleoperation and learning for humanoids.
+- [RSL-RL](https://github.com/leggedrobotics/rsl_rl) — Fast PPO implementation from ETH Zurich tuned for legged-robot RL on GPU simulators.
+- [legged_gym](https://github.com/leggedrobotics/legged_gym) — Reference Isaac Gym/Isaac Lab environments for legged locomotion research.
+- [DeepMimic](https://xbpeng.github.io/projects/DeepMimic/index.html) — Physics-based character control from motion imitation, foundational for agile RL locomotion.
+- [Walk These Ways](https://gmargo11.github.io/walk-these-ways/) — Learning framework for robust quadruped locomotion over varied terrain and command regimes.
+- [Rapid Locomotion via RL](https://arxiv.org/abs/2207.07802) — Sim-to-real locomotion approach focused on high-speed deployment-ready policies.
+- [Agile and Dynamic Motor Skills](https://arxiv.org/abs/2107.04034) — Learning-based control for dynamic maneuvers in legged robots under disturbances.
+- [Learning Quadrupedal Locomotion over Challenging Terrain](https://arxiv.org/abs/1901.08652) — Classic ANYmal result demonstrating robust transfer from simulation.
+- [Isaac Gym](https://developer.nvidia.com/isaac-gym) — GPU-parallel simulation stack that accelerated modern locomotion training pipelines.
+- [MuJoCo Menagerie](https://github.com/google-deepmind/mujoco_menagerie) — Curated high-quality robot models for repeatable locomotion research.
+- [Real-World Humanoid Locomotion with RL](https://arxiv.org/abs/2303.03381) — Sim-to-real RL controller for blind humanoid walking on a real bipedal platform (Science Robotics 2024).
+- [Periodic Reward Composition for Bipedal Gaits](https://arxiv.org/abs/2011.01387) — Sim-to-real RL recipe producing walking, hopping, and skipping from a single Cassie policy (ICRA 2021).
+- [Robust Parameterized Bipedal Locomotion (Cassie)](https://arxiv.org/abs/2103.14295) — RL controller covering a parameterised velocity/stance family on Cassie (ICRA 2021).
+- [Bipedal Soccer (DeepMind OP3)](https://arxiv.org/abs/2304.13653) — Whole-body RL pipeline producing agile soccer skills on a small humanoid (Science Robotics 2024).
+- [Humanoid Parkour Learning](https://arxiv.org/abs/2406.10759) — End-to-end perceptive RL enabling humanoid parkour over discontinuous terrain (CoRL 2024).
+- [Expressive Whole-Body Control](https://expressive-humanoid.github.io/) — Whole-body controller producing expressive, human-like motion on a real humanoid (RSS 2024).
+- [ASAP — Sim-to-Real for Humanoid Whole-Body Skills](https://agile.human2humanoid.com/) — Delta-action correction closing the sim-to-real gap on agile humanoid skills (RSS 2025).
+- [HOVER — Versatile Humanoid Whole-Body Controller](https://hover-versatile-humanoid.github.io/) — Single neural controller covering multiple humanoid command modes (ICRA 2025).
+- [FLD — Fourier Latent Dynamics (MIT Biomimetics)](https://github.com/mit-biomimetics/fld) — Periodic motion latent representation for learning agile, natural-looking legged locomotion (ICLR 2024).
+- [WASABI (Max Planck / Martius Lab)](https://github.com/martius-lab/wasabi) — Versatile skill learning for quadrupeds via unsupervised motion-prior discovery from unlabeled reference data.
+- [CASSI (Max Planck / Martius Lab)](https://github.com/martius-lab/cassi) — Self-supervised adversarial imitation of unlabeled mixed motions for versatile quadruped skill control (ICRA 2023).

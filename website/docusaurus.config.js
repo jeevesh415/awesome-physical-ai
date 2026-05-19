@@ -1,11 +1,65 @@
 /** @type {import('@docusaurus/types').Config} */
+const baseUrl = process.env.DOCUSAURUS_BASE_URL || '/awesome-physical-ai/';
+const siteUrl = process.env.DOCUSAURUS_SITE_URL || 'https://natnew.github.io';
+const customDomain = process.env.DOCUSAURUS_CUSTOM_DOMAIN || '';
+const canonicalSiteUrl = customDomain ? `https://${customDomain}` : siteUrl;
+
+// Fail fast on malformed env input. The Pages workflow already validates
+// DOCUSAURUS_CUSTOM_DOMAIN, but DOCUSAURUS_SITE_URL / DOCUSAURUS_BASE_URL
+// can also be set manually and a malformed value would build successfully
+// while breaking canonical and og:url metadata at runtime.
+if (process.env.DOCUSAURUS_SITE_URL) {
+  try {
+    // Throws on malformed origin (missing scheme, invalid host, etc.).
+    // We require an absolute URL with explicit https or http.
+    const parsed = new URL(process.env.DOCUSAURUS_SITE_URL);
+    if (!/^https?:$/.test(parsed.protocol)) {
+      throw new Error(`unsupported protocol "${parsed.protocol}"`);
+    }
+  } catch (err) {
+    throw new Error(
+      `DOCUSAURUS_SITE_URL is not a valid http(s) origin: ${process.env.DOCUSAURUS_SITE_URL} (${err.message})`,
+    );
+  }
+}
+if (process.env.DOCUSAURUS_BASE_URL && !/^\/[A-Za-z0-9._~\-/]*$/.test(process.env.DOCUSAURUS_BASE_URL)) {
+  throw new Error(
+    `DOCUSAURUS_BASE_URL must start with "/" and contain only URL-safe path characters; got: ${process.env.DOCUSAURUS_BASE_URL}`,
+  );
+}
+if (process.env.DOCUSAURUS_CUSTOM_DOMAIN && !/^[A-Za-z0-9.-]+$/.test(process.env.DOCUSAURUS_CUSTOM_DOMAIN)) {
+  throw new Error(
+    `DOCUSAURUS_CUSTOM_DOMAIN contains invalid characters; got: ${process.env.DOCUSAURUS_CUSTOM_DOMAIN}`,
+  );
+}
+
+const joinUrl = (origin, pathPrefix = '', relativePath = '') => {
+  const normalizedOrigin = origin.replace(/\/+$/, '');
+  const normalizedPrefix = pathPrefix.replace(/^\/+|\/+$/g, '');
+  const normalizedPath = relativePath.replace(/^\/+/, '');
+  const segments = [normalizedOrigin];
+
+  if (normalizedPrefix) {
+    segments.push(normalizedPrefix);
+  }
+
+  if (normalizedPath) {
+    segments.push(normalizedPath);
+  }
+
+  return segments.join('/');
+};
+
+const siteRootUrl = `${joinUrl(canonicalSiteUrl, baseUrl)}/`;
+const ogImageUrl = joinUrl(canonicalSiteUrl, baseUrl, 'img/og-card.svg');
+
 const config = {
   title: 'Awesome Physical AI',
   tagline:
-    'Repository-grounded navigation for the curated Physical AI / Embodied AI resource list.',
+    'A curated Physical AI roadmap: robotics resources, embodied AI, world models, robotics simulation, sim-to-real, Physical AI benchmarks, foundation models for robotics, and production-grade Physical AI systems.',
   favicon: 'img/favicon.svg',
-  url: 'https://natnew.github.io',
-  baseUrl: process.env.DOCUSAURUS_BASE_URL || '/awesome-physical-ai/',
+  url: canonicalSiteUrl,
+  baseUrl,
   organizationName: 'natnew',
   projectName: 'awesome-physical-ai',
   onBrokenLinks: 'throw',
@@ -26,6 +80,8 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/natnew/awesome-physical-ai/tree/main/website/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: false,
         },
         blog: false,
         theme: {
@@ -37,6 +93,37 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: ogImageUrl,
+      metadata: [
+        {
+          name: 'description',
+          content:
+            'Awesome Physical AI — a curated, engineering-oriented map of Physical AI resources: robotics resources, robot learning, embodied AI, embodied agents, embodied intelligence, robotics simulation, sim-to-real, world models, vision-language-action (VLA) models, Physical AI benchmarks, robotics datasets, robotics benchmarks, foundation models for robotics, generalist robot policies, and production-grade, safe embodied AI systems.',
+        },
+        {
+          name: 'keywords',
+          content:
+            'awesome physical AI, Physical AI resources, Physical AI roadmap, robotics resources, robot learning, robotics foundation models, embodied AI, embodied agents, embodied intelligence, robotics simulation, sim-to-real, simulation environments, world models, vision-language-action models, VLA models, Physical AI benchmarks, robotics datasets, robotics benchmarks, foundation models for robotics, generalist robot policies, production-grade Physical AI systems, safe embodied AI systems',
+        },
+        { property: 'og:title', content: 'Awesome Physical AI' },
+        {
+          property: 'og:description',
+          content:
+            'A curated Physical AI roadmap covering robotics resources, embodied AI, world models, robotics simulation, sim-to-real, VLA models, Physical AI benchmarks, foundation models for robotics, generalist robot policies, and production-grade, safe embodied AI systems.',
+        },
+        { property: 'og:url', content: siteRootUrl },
+        { property: 'og:image', content: ogImageUrl },
+        { property: 'og:type', content: 'website' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Awesome Physical AI' },
+        {
+          name: 'twitter:description',
+          content:
+            'Curated Physical AI resources: robotics, embodied AI, simulation, sim-to-real, world models, VLA models, benchmarks, and production-grade Physical AI systems.',
+        },
+        { name: 'twitter:image', content: ogImageUrl },
+        { rel: 'canonical', href: siteRootUrl },
+      ],
       colorMode: {
         defaultMode: 'dark',
         disableSwitch: true,
@@ -47,9 +134,15 @@ const config = {
         items: [
           {
             type: 'docSidebar',
+            sidebarId: 'categoriesSidebar',
+            position: 'left',
+            label: 'Categories',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'guideSidebar',
             position: 'left',
-            label: 'Docs',
+            label: 'About & How to Use',
           },
           {
             href: 'https://github.com/natnew/awesome-physical-ai/blob/main/README.md',
@@ -132,6 +225,23 @@ const config = {
         },
       },
     }),
+  themes: [
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      /** @type {import('@easyops-cn/docusaurus-search-local').PluginOptions} */
+      ({
+        hashed: true,
+        indexDocs: true,
+        indexBlog: false,
+        indexPages: true,
+        docsRouteBasePath: '/docs',
+        highlightSearchTermsOnTargetPage: true,
+        searchResultLimits: 10,
+        searchBarShortcut: true,
+        searchBarShortcutHint: true,
+      }),
+    ],
+  ],
 };
 
 module.exports = config;

@@ -1,0 +1,34 @@
+---
+id: world-models
+title: World Models
+description: Generative and predictive models of physical dynamics used for planning, simulation, and pretraining — V-JEPA 2, NVIDIA Cosmos, Genie 2, DreamerV3, DayDreamer, UniSim, I-JEPA.
+---
+
+# World Models
+
+World models are learned predictive models of physical dynamics. They take observations and actions and produce future observations, latent states, or full rollouts — enabling planning in imagination, sample-efficient RL, synthetic data generation, and pretraining for downstream policies.
+
+From an engineering standpoint, world models are how the field is attacking the data-efficiency problem: every step of imagined rollout is one fewer step on hardware, and a good world model can compress months of teleoperation into a reusable simulator. The same property makes them a load-bearing dependency for any system that uses them — model errors compound over rollout horizons, and silently shape what downstream policies can and cannot learn.
+
+When choosing between approaches, separate **generative pixel-space models** (useful for synthetic data and visualisation) from **latent-space predictive models** (useful for planning and control), and weigh **rollout horizon fidelity**, **action-conditioning quality**, and **compute cost per imagined step**. For robot learning specifically, models with demonstrated downstream task transfer matter more than visually impressive video samples.
+
+:::tip Start here
+**[DreamerV3](https://danijar.com/project/dreamerv3/)** is the most pragmatic entry point: a single fixed set of hyperparameters that produces strong results across 150+ tasks, and a clean reference implementation of latent-space world-model RL.
+:::
+
+- [V-JEPA 2 (Meta FAIR)](https://ai.meta.com/blog/v-jepa-2-world-model-benchmarks/) — Self-supervised video world model trained on 1M+ hours enabling zero-shot robot planning.
+- [NVIDIA Cosmos](https://developer.nvidia.com/cosmos) — World foundation models for physically-grounded synthetic data generation.
+- [Genie 2 (DeepMind)](https://deepmind.google/discover/blog/genie-2-a-large-scale-foundation-world-model/) — Foundation world model that generates interactive, controllable 3D environments.
+- [DreamerV3](https://danijar.com/project/dreamerv3/) — General world-model algorithm achieving strong results across 150+ tasks with fixed hyperparameters.
+- [DayDreamer](https://danijar.com/project/daydreamer/) — World models applied to physical robot learning for sample-efficient skill acquisition.
+- [UniSim](https://universal-simulator.github.io/unisim/) — Universal simulator learning real-world interactions from diverse video data.
+- [I-JEPA](https://ai.meta.com/blog/yann-lecun-ai-model-i-jepa/) — Image joint-embedding predictive architecture; foundational to the JEPA world-model line.
+- [World Models (Ha & Schmidhuber)](https://arxiv.org/abs/1803.10122) — Foundational latent-dynamics framework for planning and control in learned simulators.
+- [PlaNet](https://arxiv.org/abs/1811.04551) — Latent-space planning with learned dynamics, a core precursor to Dreamer-style methods.
+- [Dream to Control](https://arxiv.org/abs/1912.01603) — Demonstrates control directly in latent imagination without pixel-space rollouts.
+- [SimPLe](https://arxiv.org/abs/1903.00374) — Model-based RL baseline showing strong sample efficiency from learned video prediction.
+- [MuZero](https://arxiv.org/abs/1911.08265) — Learned model-based planning architecture with strong performance across control domains.
+- [DreamerV2](https://arxiv.org/abs/2010.02193) — Robust latent world-model RL variant with improved discrete latent representations.
+- [GAIA-1 (Wayve)](https://arxiv.org/abs/2309.17080) — Driving-oriented generative world model for physically plausible scenario synthesis.
+- [TD-MPC2](https://arxiv.org/abs/2310.16828) — Modern latent model-predictive control method with broad robot-control transfer.
+- [Robotic World Model (ETH RSL)](https://github.com/leggedrobotics/robotic_world_model) — Learned world model for legged robots from ETH Zurich's Robotic Systems Lab; companion [lite variant](https://github.com/leggedrobotics/robotic_world_model_lite) for lighter-weight experimentation.

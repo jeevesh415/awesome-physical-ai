@@ -1,0 +1,33 @@
+---
+id: governance-and-policy
+title: Governance & Policy
+description: Standards, frameworks, and policy guidance relevant to deploying Physical AI systems — NIST AI RMF, EU AI Act, ISO 10218, IEEE 7000, OECD AI Principles, UK AISI.
+---
+
+# Governance & Policy
+
+Governance and policy covers the standards, regulatory frameworks, and institutional guidance that constrain how Physical AI systems are designed, evaluated, and deployed. It spans cross-cutting AI risk frameworks (NIST, OECD), regional regulation (EU AI Act, US executive orders), and domain-specific safety standards for industrial and collaborative robotics (ISO 10218, ISO/TS 15066).
+
+From an engineering standpoint, governance is not a separate workstream from the technical stack — it shapes data provenance requirements, evaluation evidence, incident reporting, and the boundary between human oversight and autonomous action. Teams that treat it as a late-stage checklist routinely discover that earlier architectural choices (data pipelines, logging, model documentation) make compliance disproportionately expensive.
+
+When choosing what to track, scope by **deployment region** (EU AI Act vs. US frameworks), **risk tier** (consumer, industrial, safety-critical), and **domain standards** that already apply to your robot class. A small core — NIST AI RMF for risk practice, an applicable ISO robotics standard, and the regional regulation for your market — is usually enough to set the structure of an internal governance baseline.
+
+:::tip Start here
+The **[NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)** is the most useful single artefact to read first: voluntary, technically grounded, and structured in a way that maps cleanly onto engineering processes.
+:::
+
+- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) — Voluntary framework for managing risks across the AI lifecycle, applicable to robotics.
+- [EU AI Act](https://artificialintelligenceact.eu/) — Regulation establishing risk-tiered obligations for AI systems sold or operated in the EU.
+- [ISO 10218 / ISO/TS 15066](https://www.iso.org/standard/73934.html) — Industrial robot and collaborative-robot safety standards underpinning workplace deployment.
+- [IEEE 7000 Series](https://standards.ieee.org/initiatives/autonomous-intelligence-systems/standards/) — Standards on ethical and value-based design for autonomous and intelligent systems.
+- [OECD AI Principles](https://oecd.ai/en/ai-principles) — Intergovernmental principles guiding trustworthy AI deployment, including embodied systems.
+- [UK AI Safety Institute](https://www.aisi.gov.uk/) — Government body publishing evaluations and guidance on frontier AI risks.
+- [White House Executive Order on AI (14110)](https://www.federalregister.gov/documents/2023/11/01/2023-24283/safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence) — US federal directive on safe and trustworthy AI development relevant to robotics deployers.
+- [ISO/IEC 42001](https://www.iso.org/standard/81230.html) — AI management-system standard for governance, controls, and continuous improvement.
+- [NIST AI RMF Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) — Practical profile extending AI RMF controls to generative-model deployments.
+- [EU Machinery Regulation (EU 2023/1230)](https://eur-lex.europa.eu/eli/reg/2023/1230/oj) — Core legal framework governing safety requirements for machinery and many robotic systems in the EU.
+- [UNECE R155](https://unece.org/transport/vehicle-regulations/un-regulation-no-155-cyber-security-and-cyber-security) — Cybersecurity requirements for connected and automated road vehicles.
+- [UNECE R156](https://unece.org/transport/vehicle-regulations/un-regulation-no-156-software-update-and-software-updates-management) — Software update and update-management requirements for vehicles.
+- [ISO 13482](https://www.iso.org/standard/53820.html) — Safety standard for personal care robots operating near people.
+- [UL 4600](https://standardscatalog.ul.com/standards/en/standard_4600) — Safety case standard for autonomous products and systems.
+- [ISO 26262](https://www.iso.org/standard/43464.html) — Functional safety standard for electrical and software systems in road vehicles.
